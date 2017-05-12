@@ -22,6 +22,11 @@ ENV ARTIFACTORY_VER=5.3.0 \
 RUN mkdir -pv /opt/jfrog && \
     curl -q ${DOWNLOAD_URL}/artifactory-oss-${ARTIFACTORY_VER}.tar.gz | tar -xzC /opt/jfrog/ && \
     curl -q ${DOWNLOAD_URL}/data.tar.gz | tar -xzC /tmp
+
+# local add tar package
+# ADD artifactory-oss-${ARTIFACTORY_VER}.tar.gz /opt/jfrog/
+# ADD data.tar.gz /tmp/
+
 COPY entrypoint-artifactory.sh /
 
 # Extract artifactory zip and create needed directories and softlinks
