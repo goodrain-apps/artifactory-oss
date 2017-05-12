@@ -17,9 +17,11 @@ RUN apk add --no-cache tzdata wget curl bash su-exec && \
     echo "Asia/Shanghai" >  /etc/timezone && \
     date && apk del --no-cache tzdata
 
-ENV ARTIFACTORY_VER=5.3.0
-ADD artifactory-oss-${ARTIFACTORY_VER}.tar.gz /opt/jfrog/
-ADD data.tar.gz /tmp/
+ENV ARTIFACTORY_VER=5.3.0 \
+    DOWNLOAD_URL="http://oe5ahutux.bkt.clouddn.com"
+RUN mkdir -pv /opt/jfrog && \
+    curl -q ${DOWNLOAD_URL}/artifactory-oss-${ARTIFACTORY_VER}.tar.gz | tar -xzC /opt/jfrog/ && \
+    curl -q ${DOWNLOAD_URL}/data.tar.gz | tar -xzC /tmp
 COPY entrypoint-artifactory.sh /
 
 # Extract artifactory zip and create needed directories and softlinks
