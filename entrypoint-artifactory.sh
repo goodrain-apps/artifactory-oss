@@ -84,7 +84,7 @@ setupDataDirs () {
     logger "Setting up data directories if missing"
     for d in etc data logs backup access
     do
-      ln -s ${ARTIFACTORY_DATA}/${d} ${ARTIFACTORY_HOME}/${d} 
+      ln -s ${ARTIFACTORY_DATA}/${d} ${ARTIFACTORY_HOME}/${d}
     done
 }
 
@@ -277,5 +277,4 @@ addExtraJavaArgs
 
 echo; echo "====================================="; echo
 
-echo "block until instance lock is leased"
-flock -x $ARTIFACTORY_HOME/data/instance.lock -c "exec su-exec ${ARTIFACTORY_USER_NAME} ${ARTIFACTORY_HOME}/bin/artifactory.sh"
+exec su-exec ${ARTIFACTORY_USER_NAME} ${ARTIFACTORY_HOME}/bin/artifactory.sh

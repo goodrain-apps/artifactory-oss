@@ -1,4 +1,4 @@
-FROM goodrain.me/openjdk:8u121-jdk-alpine
+FROM goodrainapps/openjdk:8u131-jdk-alpine
 
 MAINTAINER zhouyq@goodrain.com
 
@@ -10,7 +10,7 @@ ENV ARTIFACTORY_USER_NAME=artifactory \
     RECOMMENDED_MAX_OPEN_FILES=32000 \
     MIN_MAX_OPEN_FILES=10000 \
     RECOMMENDED_MAX_OPEN_PROCESSES=1024 \
-    POSTGRESQL_VERSION=9.4.1212 
+    POSTGRESQL_VERSION=9.4.1212
 
 RUN apk add --no-cache tzdata wget curl bash su-exec && \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
@@ -39,7 +39,7 @@ RUN mv ${ARTIFACTORY_HOME}*/ ${ARTIFACTORY_HOME}/ && \
     chmod +x /entrypoint-artifactory.sh
 
 # Default mounts. Should be passed in `docker run` or in docker-compose
-VOLUME ${ARTIFACTORY_DATA}
+VOLUME /var/opt/jfrog/artifactory
 
 # Expose Tomcat's port
 EXPOSE 8081
