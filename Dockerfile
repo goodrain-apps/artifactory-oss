@@ -13,7 +13,7 @@ ENV ARTIFACTORY_USER_NAME=artifactory \
     POSTGRESQL_VERSION=9.4.1212
 
 ENV ARTIFACTORY_VER=5.3.0 \
-    DOWNLOAD_URL="http://oe5ahutux.bkt.clouddn.com"
+    DOWNLOAD_URL="http://goodrain-pkg.oss-cn-shanghai.aliyuncs.com"
 
 COPY entrypoint-artifactory.sh /
 
