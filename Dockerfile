@@ -12,31 +12,21 @@ ENV ARTIFACTORY_USER_NAME=artifactory \
     RECOMMENDED_MAX_OPEN_PROCESSES=1024 \
     POSTGRESQL_VERSION=9.4.1212
 
-RUN apk add --no-cache tzdata wget curl bash su-exec && \
-    cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    echo "Asia/Shanghai" >  /etc/timezone && \
-    date && apk del --no-cache tzdata
-
 ENV ARTIFACTORY_VER=5.3.0 \
     DOWNLOAD_URL="http://oe5ahutux.bkt.clouddn.com"
-RUN mkdir -pv /opt/jfrog && \
-    curl -q ${DOWNLOAD_URL}/artifactory-oss-${ARTIFACTORY_VER}.tar.gz | tar -xzC /opt/jfrog/ && \
-    curl -q ${DOWNLOAD_URL}/data.tar.gz | tar -xzC /tmp
-
-# local add tar package
-# ADD artifactory-oss-${ARTIFACTORY_VER}.tar.gz /opt/jfrog/
-# ADD data.tar.gz /tmp/
 
 COPY entrypoint-artifactory.sh /
 
-# Extract artifactory zip and create needed directories and softlinks
-RUN mv ${ARTIFACTORY_HOME}*/ ${ARTIFACTORY_HOME}/ && \
-    mv ${ARTIFACTORY_HOME}/etc ${ARTIFACTORY_HOME}/etc.orig/ && \
-    rm -rf ${ARTIFACTORY_HOME}/logs && \
-    addgroup -g ${ARTIFACTORY_USER_ID} ${ARTIFACTORY_USER_NAME} && \
-    adduser -u ${ARTIFACTORY_USER_ID} -D -S -G ${ARTIFACTORY_USER_NAME} ${ARTIFACTORY_USER_NAME} && \
-    chown -R ${ARTIFACTORY_USER_NAME}:${ARTIFACTORY_USER_NAME} ${ARTIFACTORY_HOME} && \
-    chmod +x /entrypoint-artifactory.sh
+RUN mkdir -pv /opt/jfrog \
+    && curl -q ${DOWNLOAD_URL}/artifactory-oss-${ARTIFACTORY_VER}.tar.gz | tar -xzC /opt/jfrog/ \
+    && curl -q ${DOWNLOAD_URL}/data.tar.gz | tar -xzC /tmp \
+    && mv ${ARTIFACTORY_HOME}*/ ${ARTIFACTORY_HOME}/ \
+    && mv ${ARTIFACTORY_HOME}/etc ${ARTIFACTORY_HOME}/etc.orig/ \
+    && rm -rf ${ARTIFACTORY_HOME}/logs \
+    && addgroup -g ${ARTIFACTORY_USER_ID} ${ARTIFACTORY_USER_NAME} \
+    && adduser -u ${ARTIFACTORY_USER_ID} -D -S -G ${ARTIFACTORY_USER_NAME} ${ARTIFACTORY_USER_NAME} \
+    && chown -R ${ARTIFACTORY_USER_NAME}:${ARTIFACTORY_USER_NAME} ${ARTIFACTORY_HOME} \
+    && chmod +x /entrypoint-artifactory.sh
 
 # Default mounts. Should be passed in `docker run` or in docker-compose
 VOLUME /var/opt/jfrog/artifactory
