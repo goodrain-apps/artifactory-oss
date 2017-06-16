@@ -17,12 +17,13 @@ ENV ARTIFACTORY_VER=5.3.2 \
 
 COPY entrypoint-artifactory.sh /
 
-RUN mkdir -pv /opt/jfrog \
+RUN set -e \
+    && mkdir -pv /opt/jfrog \
     && curl -sL -o /opt/jfrog/artifactory-oss.zip ${DOWNLOAD_URL}jfrog-artifactory-oss-${ARTIFACTORY_VER}.zip \
-    && unzip /opt/jfrog/artifactory-oss.zip
+    && unzip -q /opt/jfrog/artifactory-oss.zip \
     && mv ${ARTIFACTORY_HOME}*/ ${ARTIFACTORY_HOME}/ \
     && mv ${ARTIFACTORY_HOME}/etc ${ARTIFACTORY_HOME}/etc.orig/ \
-    && rm -rf ${ARTIFACTORY_HOME}/logs \
+    && rm -rf ${ARTIFACTORY_HOME}/logs /opt/jfrog/artifactory-oss.zip\
     && addgroup -g ${ARTIFACTORY_USER_ID} ${ARTIFACTORY_USER_NAME} \
     && adduser -u ${ARTIFACTORY_USER_ID} -D -S -G ${ARTIFACTORY_USER_NAME} ${ARTIFACTORY_USER_NAME} \
     && chown -R ${ARTIFACTORY_USER_NAME}:${ARTIFACTORY_USER_NAME} ${ARTIFACTORY_HOME} \
