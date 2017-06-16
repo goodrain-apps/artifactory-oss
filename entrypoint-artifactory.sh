@@ -75,15 +75,16 @@ checkMounts () {
 # In case data dirs are missing or not mounted, need to create them
 setupDataDirs () {
 
-   if [ ! -f ${ARTIFACTORY_DATA}/.inited ];then
-     logger "Preparing artifactory config file..."
-     cp -rp /tmp/data/* ${ARTIFACTORY_DATA}/ && touch ${ARTIFACTORY_DATA}/.inited
-     chown ${ARTIFACTORY_USER_NAME}.${ARTIFACTORY_USER_NAME} ${ARTIFACTORY_DATA} -R
-   fi
+#   if [ ! -f ${ARTIFACTORY_DATA}/.inited ];then
+#     logger "Preparing artifactory config file..."
+#     cp -rp /tmp/data/* ${ARTIFACTORY_DATA}/ && touch ${ARTIFACTORY_DATA}/.inited
+#     chown ${ARTIFACTORY_USER_NAME}.${ARTIFACTORY_USER_NAME} ${ARTIFACTORY_DATA} -R
+#   fi
 
     logger "Setting up data directories if missing"
     for d in etc data logs backup access
     do
+      [ ! -d ${ARTIFACTORY_DATA}/${d} ] && mkdir ${ARTIFACTORY_DATA}/${d}
       ln -s ${ARTIFACTORY_DATA}/${d} ${ARTIFACTORY_HOME}/${d}
     done
 }

@@ -12,14 +12,14 @@ ENV ARTIFACTORY_USER_NAME=artifactory \
     RECOMMENDED_MAX_OPEN_PROCESSES=1024 \
     POSTGRESQL_VERSION=9.4.1212
 
-ENV ARTIFACTORY_VER=5.3.0 \
-    DOWNLOAD_URL="http://goodrain-pkg.oss-cn-shanghai.aliyuncs.com"
+ENV ARTIFACTORY_VER=5.3.2 \
+    DOWNLOAD_URL="https://bintray.com/jfrog/artifactory/download_file?file_path="
 
 COPY entrypoint-artifactory.sh /
 
 RUN mkdir -pv /opt/jfrog \
-    && curl -q ${DOWNLOAD_URL}/artifactory-oss-${ARTIFACTORY_VER}.tar.gz | tar -xzC /opt/jfrog/ \
-    && curl -q ${DOWNLOAD_URL}/data.tar.gz | tar -xzC /tmp \
+    && curl -sL -o /opt/jfrog/artifactory-oss.zip ${DOWNLOAD_URL}jfrog-artifactory-oss-${ARTIFACTORY_VER}.zip \
+    && unzip /opt/jfrog/artifactory-oss.zip
     && mv ${ARTIFACTORY_HOME}*/ ${ARTIFACTORY_HOME}/ \
     && mv ${ARTIFACTORY_HOME}/etc ${ARTIFACTORY_HOME}/etc.orig/ \
     && rm -rf ${ARTIFACTORY_HOME}/logs \
