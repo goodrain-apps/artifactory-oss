@@ -85,6 +85,7 @@ setupDataDirs () {
     for d in etc data logs backup access
     do
       [ ! -d ${ARTIFACTORY_DATA}/${d} ] && mkdir ${ARTIFACTORY_DATA}/${d}
+      chown ${ARTIFACTORY_USER_NAME}.${ARTIFACTORY_USER_NAME} ${ARTIFACTORY_DATA} -R
       ln -s ${ARTIFACTORY_DATA}/${d} ${ARTIFACTORY_HOME}/${d}
     done
 }
