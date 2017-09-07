@@ -4,7 +4,7 @@ MAINTAINER zhouyq@goodrain.com
 
 # Set vars
 ENV ARTIFACTORY_USER_NAME=artifactory \
-    ARTIFACTORY_USER_ID=1030 \
+    ARTIFACTORY_USER_ID=200 \
     ARTIFACTORY_HOME=/opt/jfrog/artifactory \
     ARTIFACTORY_DATA=/var/opt/jfrog/artifactory \
     RECOMMENDED_MAX_OPEN_FILES=32000 \
