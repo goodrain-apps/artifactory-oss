@@ -12,7 +12,7 @@ ENV ARTIFACTORY_USER_NAME=artifactory \
     RECOMMENDED_MAX_OPEN_PROCESSES=1024 \
     POSTGRESQL_VERSION=9.4.1212
 
-ENV ARTIFACTORY_VER=5.3.2 \
+ENV ARTIFACTORY_VER=5.4.6 \
     DOWNLOAD_URL="https://bintray.com/jfrog/artifactory/download_file?file_path="
 
 
