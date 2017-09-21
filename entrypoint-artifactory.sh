@@ -4,6 +4,40 @@
 #
 [ $DEBUG ] && set -x
 
+# set default_java_mem_opts
+if [ "$JVM_OPTS" == "" ];then
+  case ${MEMORY_SIZE:-medium} in
+      "medium")
+         export JVM_OPTS="-Xms256m -Xmx256m"
+         echo "Optimizing java process for 512M Memory...." >&2
+         ;;
+      "large")
+         export JVM_OPTS="-Xms512m -Xmx512m"
+         echo "Optimizing java process for 1G Memory...." >&2
+         ;;
+      "2xlarge")
+         export JVM_OPTS="-Xms1G -Xmx1G"
+         echo "Optimizing java process for 2G Memory...." >&2
+         ;;
+      "4xlarge")
+         export JVM_OPTS="-Xms2G -Xmx2G"
+         echo "Optimizing java process for 4G Memory...." >&2
+         ;;
+      "8xlarge")
+         export JVM_OPTS="-Xms4G -Xmx4G"
+         echo "Optimizing java process for 8G Memory...." >&2
+         ;;
+      16xlarge|32xlarge|64xlarge)
+         export JVM_OPTS="-Xms8Gm -Xmx8G"
+         echo "Optimizing java process for biger Memory...." >&2
+         ;;
+      *)
+         export JVM_OPTS="-Xms128m -Xmx128m"
+         echo "Optimizing java process for 256M Memory...." >&2
+         ;;
+    esac
+fi
+
 : ${ARTIFACTORY_HOME:=/opt/jfrog/artifactory}
 : ${ARTIFACTORY_DATA:=/var/opt/jfrog/artifactory}
 ART_ETC=$ARTIFACTORY_DATA/etc
@@ -264,6 +298,9 @@ addExtraJavaArgs() {
         cp -v ${ARTIFACTORY_HOME}/bin/artifactory.default ${ARTIFACTORY_HOME}/bin/artifactory.default.origin
         echo "export JAVA_OPTIONS=\"\$JAVA_OPTIONS $EXTRA_JAVA_OPTIONS\"" >> ${ARTIFACTORY_HOME}/bin/artifactory.default
     fi
+    
+    # modify artifactory.default
+    sed -i "s/-Xms\w+ -Xmx\w+ /$JVM_OPTS /" ${ARTIFACTORY_HOME}/bin/artifactory.default
 }
 
 sleep ${PAUSE:-0}
