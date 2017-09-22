@@ -10,7 +10,9 @@
 
 # Supported tags and Dockerfile links
 
-`5.3.2` , `5.3` `latest` [Dockerfile](https://github.com/goodrain-apps/artifactory-oss/blob/master/Dockerfile)
+`5.4.6` , `latest` [Dockerfile](https://github.com/goodrain-apps/artifactory-oss/blob/5.4.6/Dockerfile)
+
+`5.3.2` , `5.3` `latest` [Dockerfile](https://github.com/goodrain-apps/artifactory-oss/blob/5.3.2/Dockerfile)
 
 `5.3.0` [Dockerfile](https://github.com/goodrain-apps/artifactory-oss/blob/5.3.0/Dockerfile)
 
