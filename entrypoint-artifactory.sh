@@ -300,7 +300,7 @@ addExtraJavaArgs() {
     fi
     
     # modify artifactory.default
-    sed -i "s/-Xms\w+ -Xmx\w+ /$JVM_OPTS /" ${ARTIFACTORY_HOME}/bin/artifactory.default
+    sed -i -r "s/-Xms\w+ -Xmx\w+ /$JVM_OPTS /" ${ARTIFACTORY_HOME}/bin/artifactory.default
 }
 
 sleep ${PAUSE:-0}
