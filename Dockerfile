@@ -22,7 +22,7 @@ RUN set -ex \
     && unzip -q /opt/jfrog/artifactory-oss.zip -d /opt/jfrog/ \
     && mv ${ARTIFACTORY_HOME}-oss-${ARTIFACTORY_VER}/ ${ARTIFACTORY_HOME}/ \
     && rm -rf ${ARTIFACTORY_HOME}/etc ${ARTIFACTORY_HOME}/logs /opt/jfrog/artifactory-oss.zip\
-    && addgroup -g ${ARTIFACTORY_USER_ID} ${ARTIFACTORY_USER_NAME} \
+    && sed -i "s/nofiles/${ARTIFACTORY_USER_NAME}/" /etc/group \
     && adduser -u ${ARTIFACTORY_USER_ID} -D -S -G ${ARTIFACTORY_USER_NAME} ${ARTIFACTORY_USER_NAME} \
     && chown -R ${ARTIFACTORY_USER_NAME}:${ARTIFACTORY_USER_NAME} ${ARTIFACTORY_HOME} 
 
